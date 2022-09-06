@@ -1,10 +1,10 @@
 """Contains version-related exceptions."""
 
 
-from ... import m_class_excs
+from .. import m_base
 
 
-class VersionException(m_class_excs.ClassException):
+class VersionException(m_base.PAException):
     """The base version exception class."""
 
 

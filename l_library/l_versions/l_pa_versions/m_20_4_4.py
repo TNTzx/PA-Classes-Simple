@@ -9,8 +9,7 @@ import os
 import json
 import copy
 
-from .... import m_disk_utils
-from ... import m_level_data, m_level_excs
+from ... import m_disk_utils, m_level_data, m_level_excs
 from .. import m_branches, m_combine_settings, m_version_excs, m_versions
 
 

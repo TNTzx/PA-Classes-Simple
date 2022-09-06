@@ -1,10 +1,10 @@
 """Contains classes for branches."""
 
 
-from ... import m_base
+from .. import m_base
 
 
-class Branch(m_base.PACMObject):
+class Branch(m_base.PAObject):
     """Represents a version branch."""
     name: str
 

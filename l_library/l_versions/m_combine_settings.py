@@ -1,10 +1,10 @@
 """Contains combine settings."""
 
 
-from ... import m_base
+from .. import m_base
 
 
-class CombineSettings(m_base.PACMObject):
+class CombineSettings(m_base.PAObject):
     """Represents settings for combining."""
     def __init__(
             self,

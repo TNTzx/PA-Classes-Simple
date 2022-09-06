@@ -3,8 +3,7 @@
 
 from __future__ import annotations
 
-from .. import m_handlers, m_disk_utils
-from . import l_versions, m_level_excs
+from . import m_handlers, m_disk_utils, l_versions, m_level_excs
 
 
 class LevelData(m_handlers.JSONFileHandler):
