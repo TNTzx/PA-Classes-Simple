@@ -3,8 +3,7 @@
 
 from __future__ import annotations
 
-from ... import m_handlers
-from .. import m_level_data
+from .. import m_handlers, m_level_data
 from . import m_combine_settings, m_branches
 
 
