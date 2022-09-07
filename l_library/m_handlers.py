@@ -78,12 +78,22 @@ class RawFileHandler(Handler):
         """Appends the file extension to the file name."""
         return f"{filename}.{cls.raw_file_ext}"
 
-    def to_file(self, folder_path: str, filename: str):
+    def to_file_raw(self, folder_path: str, filename: str):
         """Outputs this object to a raw file."""
 
     @classmethod
-    def from_file(cls, file_path: str):
+    def from_file_raw(cls, file_path: str):
         """Creates this object to a raw file."""
+
+
+class FolderHandler(Handler):
+    """A handler for writing to a folder."""
+    def to_folder(self, folder_path: str):
+        """Creates the folder."""
+
+    @classmethod
+    def from_folder(self, folder_path: str):
+        """Creates this object from the folder path."""
 
 
 class JSONFileHandler(JSONHandler, FileHandler):

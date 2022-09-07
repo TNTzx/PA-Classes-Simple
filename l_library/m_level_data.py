@@ -6,7 +6,7 @@ from __future__ import annotations
 from . import m_handlers, m_disk_utils, l_versions, m_level_excs
 
 
-class LevelData(m_handlers.JSONFileHandler):
+class LevelData(m_handlers.JSONFileHandler, m_handlers.RawFileHandler):
     """Represents a certain file in levels."""
 
 
@@ -27,13 +27,27 @@ class JSONData(LevelData):
             data = json_data["data"]
         )
 
+    # TEST
+    def to_file_raw(self, folder_path: str, filename: str):
+        m_disk_utils.override_file(
+            folder_path,
+            self.append_file_ext(filename),
+            str(self.data)
+        )
+
+    @classmethod
+    def from_file_raw(cls, file_path: str):
+        return cls(data = m_disk_utils.read_file(file_path, False))
+
 
 class Level(JSONData):
     """Represents a `level.lsb` file."""
+    raw_file_ext: str = "lsb"
 
 
 class Metadata(JSONData):
     """Represents a `metadata.lsb` file."""
+    raw_file_ext: str = "lsb"
 
 
 class Audio(LevelData):
@@ -66,11 +80,26 @@ class Audio(LevelData):
         )
 
 
+    def to_file_raw(self, folder_path: str, filename: str):
+        m_disk_utils.override_file(
+            folder_path,
+            self.append_file_ext(filename),
+            self.audio_bytes,
+            binary = True
+        )
+
+    @classmethod
+    def from_file_raw(cls, file_path: str):
+        return cls(audio_bytes = m_disk_utils.read_file(file_path, True))
+
+
 class Theme(JSONData):
     """Represents a `.lst` file."""
+    raw_file_ext: str = "lst"
 
 
-class LevelFolder(m_handlers.JSONFileHandler):
+
+class LevelFolder(m_handlers.JSONFileHandler, m_handlers.FolderHandler):
     """Represents a level folder."""
     def __init__(
             self,
@@ -126,3 +155,12 @@ class LevelFolder(m_handlers.JSONFileHandler):
             audio = source.audio,
             themes = themes
         )
+    
+    def to_folder(self, folder_path: str):
+        element_infos: list[tuple[LevelData, str]] = [
+            (self.level, "level"),
+            (self.metadata, "metadata"),
+            (self.audio, "audio")
+        ]
+        for element, filename in element_infos:
+            element.to_file_raw(folder_path, filename)
