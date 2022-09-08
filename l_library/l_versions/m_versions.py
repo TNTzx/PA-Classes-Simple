@@ -49,6 +49,15 @@ class PAVersion(m_handlers.JSONClassHandler):
 
         raise ValueError("Version not found or not supported.")
 
+    @classmethod
+    def get_version_from_description(cls, description: str):
+        """Gets the version from its description."""
+        for version in cls.get_all_versions():
+            if version.get_description() == description:
+                return version
+
+        raise ValueError("Version not found or not supported.")
+
 
     @classmethod
     def get_version_number(cls, level: m_level_data.Level):
