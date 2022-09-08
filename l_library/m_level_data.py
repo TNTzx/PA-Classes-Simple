@@ -155,7 +155,7 @@ class LevelFolder(m_handlers.JSONFileHandler, m_handlers.FolderHandler):
             audio = source.audio,
             themes = themes
         )
-    
+
     def to_folder(self, folder_path: str):
         element_infos: list[tuple[LevelData, str]] = [
             (self.level, "level"),
