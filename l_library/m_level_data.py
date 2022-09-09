@@ -104,49 +104,30 @@ class LevelFolder(m_handlers.JSONHandler):
     """Contains the data for a level folder."""
     def __init__(
             self,
-            level: Level,
-            metadata: Metadata,
-            audio: Audio | None
+            version: type[l_versions.PAVersion] = l_versions.DEFAULT_VERSION,
+            level: Level = Level(),
+            metadata: Metadata = Metadata(),
+            audio: Audio | None = None
         ):
+        self.version = version
         self.level = level
         self.metadata = metadata
         self.audio = audio
 
 
-
-class LevelFolderInfo(m_handlers.JSONFileHandler, m_handlers.FolderHandler):
-    """Contains information about the level folder."""
-    def __init__(
-            self,
-            version: type[l_versions.PAVersion],
-            level_folder: LevelFolder,
-            themes: list[Theme] = None
-        ):
-        if themes is None:
-            themes = []
-
-        self.version = version
-        self.level_folder = level_folder
-        self.themes = themes
-
-
     def to_json(self) -> dict | list:
         return {
-            "version": self.version.to_json(),
             "level": self.level.to_json(),
             "metadata": self.metadata.to_json(),
-            "audio": self.audio.to_json() if self.audio is not None else None,
-            "themes": [theme.to_json() for theme in self.themes]
+            "audio": self.audio.to_json() if self.audio is not None else None
         }
 
     @classmethod
     def _from_json_unwrap(cls, json_data: dict | list):
         return cls(
-            version = l_versions.PAVersion.from_json(json_data["version"]),
             level = Level.from_json(json_data["level"]),
             metadata = Metadata.from_json(json_data["metadata"]),
             audio = Audio.from_json(json_data["audio"]) if json_data["audio"] is not None else None,
-            themes = [Theme.from_json(theme_json) for theme_json in json_data["themes"]]
         )
 
 
@@ -158,14 +139,38 @@ class LevelFolderInfo(m_handlers.JSONFileHandler, m_handlers.FolderHandler):
         levels = [level_folder.level for level_folder in level_folders]
         level = source.version.combine_levels(levels, source.level, combine_settings)
 
-        themes: list[Theme] = []
-        for level_folder in level_folders:
-            themes += [theme for theme in level_folder.themes if theme not in themes]
-
         return cls(
             version = source.version,
             level = level,
             metadata = source.metadata,
-            audio = source.audio,
-            themes = themes
+            audio = source.audio
+        )
+
+
+
+class LevelFolderInfo(m_handlers.JSONFileHandler, m_handlers.FolderHandler):
+    """Contains information about the level folder."""
+    def __init__(
+            self,
+            level_folder: LevelFolder = LevelFolder(),
+            themes: list[Theme] = None
+        ):
+        if themes is None:
+            themes = []
+
+        self.level_folder = level_folder
+        self.themes = themes
+
+
+    def to_json(self) -> dict | list:
+        return {
+            "level_folder": self.level_folder.to_json(),
+            "themes": [theme.to_json() for theme in self.themes]
+        }
+
+    @classmethod
+    def _from_json_unwrap(cls, json_data: dict | list):
+        return cls(
+            level_folder = LevelFolder.from_json(json_data["level_folder"]),
+            themes = [Theme.from_json(theme_json) for theme_json in json_data["themes"]]
         )
