@@ -27,8 +27,9 @@ class FolderNotFound(ImportException):
 
 class LevelFileNotFound(ImportException):
     """The required level file is missing."""
-    def __init__(self, missing_file: str):
-        super().__init__(f"Missing level file: {missing_file}")
+    def __init__(self, level_folder_path: str, missing_file: str):
+        super().__init__(f"Missing level file in {level_folder_path}: {missing_file}")
+        self.level_folder_path = level_folder_path
         self.missing_file = missing_file
 
 class IncompatibleVersionImport(ImportException):

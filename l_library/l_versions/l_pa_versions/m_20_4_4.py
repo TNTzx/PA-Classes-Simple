@@ -56,14 +56,14 @@ class v20_4_4(m_versions.PAVersion):
                     audio = m_level_data.Audio.from_path(get_path_from_folder("level.ogg"))
                 except m_level_excs.AudioImportException as exc:
                     raise m_version_excs.LevelFileNotFound(
-                        os.path.split(exc.incorrect_path)[1]
+                        level_folder_path, os.path.split(exc.incorrect_path)[1]
                     ) from exc
             else:
                 audio = None
 
         except FileNotFoundError as exc:
             raise m_version_excs.LevelFileNotFound(
-                os.path.split(exc.filename)[1]
+                level_folder_path, os.path.split(exc.filename)[1]
             ) from exc
 
 
