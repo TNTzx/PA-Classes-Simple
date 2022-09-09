@@ -2,6 +2,7 @@
 
 
 import os
+import subprocess
 
 import base64
 
@@ -69,6 +70,19 @@ def get_all_file_paths_in_folder(folder: str, recursive: bool = False):
         paths = paths + inside_folder_paths_combined
 
     return paths
+
+
+FILE_BROWSER_PATH = os.path.join(os.getenv("WINDIR"), "explorer.exe")
+
+def open_folder_in_explorer(folder_path: str):
+    """Opens the folder in explorer."""
+    folder_path = os.path.normpath(folder_path)
+    subprocess.run([FILE_BROWSER_PATH, folder_path], check = False)
+
+def open_file_in_explorer(file_path: str):
+    """Opens the file in explorer."""
+    file_path = os.path.normpath(file_path)
+    subprocess.run([FILE_BROWSER_PATH, "/select", file_path], check = False)
 
 
 def bytes_to_base64(bytes_data: bytes):
