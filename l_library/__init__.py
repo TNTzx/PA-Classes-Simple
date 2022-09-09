@@ -4,7 +4,7 @@
 from .m_base import PAMeta, PAObject, PAException
 
 from .m_disk_utils import \
-    override_file, read_file, \
+    override_file, read_file, make_folder_path, \
     path_exists, \
     get_all_file_paths_in_folder, \
     bytes_to_base64, base64_to_bytes

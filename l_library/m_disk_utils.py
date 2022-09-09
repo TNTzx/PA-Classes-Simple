@@ -24,6 +24,11 @@ def override_file(folder_path: str, filename: str, data: str | bytes, binary: bo
             file.write(data)
 
 
+def make_folder_path(path: str):
+    """Makes a folder path."""
+    os.mkdir(path)
+
+
 def read_file(file_path: str, binary: bool = False):
     """Returns the file contents."""
     if not binary:
