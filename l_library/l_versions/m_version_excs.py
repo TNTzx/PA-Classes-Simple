@@ -31,10 +31,11 @@ class LevelFileNotFound(ImportException):
         super().__init__(f"Missing level file: {missing_file}")
         self.missing_file = missing_file
 
-class IncompatibleVersion(ImportException):
+class IncompatibleVersionImport(ImportException):
     """The version is incompatible with the class you are using."""
-    def __init__(self, importing_version_num: str, current_version_num: str):
-        super().__init__(f"The level folder being imported (version {importing_version_num}) is incompatible with the current selected version number (version {current_version_num}).")
+    def __init__(self, level_folder_path: str, importing_version_num: str, current_version_num: str):
+        super().__init__(f"The level folder {level_folder_path} with version {importing_version_num} is incompatible with version {current_version_num}.")
+        self.level_folder_path = level_folder_path
         self.importing_version_num = importing_version_num
         self.current_version_num = current_version_num
 

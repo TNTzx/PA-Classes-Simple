@@ -71,7 +71,7 @@ class v20_4_4(m_versions.PAVersion):
             level_version_num = cls.get_version_number(level)
             if level_version_num is None:
                 level_version_num = "cannot detect"
-            raise m_version_excs.IncompatibleVersion(level_version_num, cls.version_number)
+            raise m_version_excs.IncompatibleVersionImport(level_folder_path, level_version_num, cls.version_number)
 
 
         return m_level_data.LevelFolder(

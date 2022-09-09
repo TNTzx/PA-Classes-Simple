@@ -12,7 +12,7 @@ from .m_combine_settings import CombineSettings
 from .m_version_excs import \
     VersionException, \
         ImportException, \
-            IncompatibleVersion, \
+            IncompatibleVersionImport, \
             LevelFileNotFound, AudioNotPresent, \
             FolderNotFound, \
             ThemeImportException, \
