@@ -3,6 +3,8 @@
 
 from __future__ import annotations
 
+import json
+
 from . import m_handlers, m_disk_utils, l_versions, m_level_excs
 
 
@@ -34,7 +36,7 @@ class JSONData(LevelData):
         m_disk_utils.override_file(
             folder_path,
             self.append_file_ext_raw(filename),
-            str(self.data)
+            json.dumps(self.data, ensure_ascii = False)
         )
 
     @classmethod
