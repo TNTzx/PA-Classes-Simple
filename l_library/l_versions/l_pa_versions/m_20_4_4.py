@@ -32,10 +32,10 @@ class v20_4_4(m_versions.PAVersion):
 
 
     @classmethod
-    def import_level_folder(cls, level_folder: str, load_audio: bool = True) -> m_level_data.LevelFolder:
+    def import_level_folder(cls, level_folder_path: str, load_audio: bool = True) -> m_level_data.LevelFolder:
         def get_path_from_folder(filename: str):
             """Gets the path of the filename from the level folder."""
-            return os.path.join(level_folder, filename)
+            return os.path.join(level_folder_path, filename)
 
         def get_data_in_level_folder(filename: str):
             """Returns the contents of the file inside of the level folder."""
@@ -43,8 +43,8 @@ class v20_4_4(m_versions.PAVersion):
             file = m_disk_utils.read_file(path)
             return json.loads(file)
 
-        if not m_disk_utils.path_exists(level_folder):
-            raise m_version_excs.FolderNotFound(level_folder)
+        if not m_disk_utils.path_exists(level_folder_path):
+            raise m_version_excs.FolderNotFound(level_folder_path)
 
 
         try:

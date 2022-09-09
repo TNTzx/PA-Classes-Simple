@@ -69,7 +69,7 @@ class PAVersion(m_handlers.JSONClassHandler):
 
 
     @classmethod
-    def import_level_folder(cls, level_folder: str, load_audio: bool = True) -> m_level_data.LevelFolder:
+    def import_level_folder(cls, level_folder_path: str, load_audio: bool = True) -> m_level_data.LevelFolder:
         """Gets the level data from a folder."""
 
     @classmethod
