@@ -13,7 +13,6 @@ from ... import m_disk_utils, m_level_data, m_level_excs
 from .. import m_branches, m_combine_settings, m_version_excs, m_versions
 
 
-
 class v20_4_4(m_versions.PAVersion):
     """The 20.4.4 version."""
     version_number: str = "20.4.4"
@@ -283,3 +282,6 @@ class v20_4_4(m_versions.PAVersion):
             combined_level: m_level_data.Level = cls.combine_levels([copied_primary_level, combined_level])
 
         return combined_level
+
+
+DEFAULT_VERSION = v20_4_4

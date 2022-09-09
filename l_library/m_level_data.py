@@ -12,7 +12,9 @@ class LevelData(m_handlers.JSONFileHandler, m_handlers.RawFileHandler):
 
 class JSONData(LevelData):
     """Level data that contains JSON."""
-    def __init__(self, data: dict | list):
+    def __init__(self, data: dict | list = None):
+        if data is None:
+            data = {}
         self.data = data
 
 
@@ -98,21 +100,33 @@ class Theme(JSONData):
     raw_file_ext: str = "lst"
 
 
-
-class LevelFolder(m_handlers.JSONFileHandler, m_handlers.FolderHandler):
-    """Represents a level folder."""
+class LevelFolder(m_handlers.JSONHandler):
+    """Contains the data for a level folder."""
     def __init__(
             self,
-            version: type[l_versions.PAVersion],
             level: Level,
             metadata: Metadata,
-            audio: Audio | None,
-            themes: list[Theme]
+            audio: Audio | None
         ):
-        self.version = version
         self.level = level
         self.metadata = metadata
         self.audio = audio
+
+
+
+class LevelFolderInfo(m_handlers.JSONFileHandler, m_handlers.FolderHandler):
+    """Contains information about the level folder."""
+    def __init__(
+            self,
+            version: type[l_versions.PAVersion],
+            level_folder: LevelFolder,
+            themes: list[Theme] = None
+        ):
+        if themes is None:
+            themes = []
+
+        self.version = version
+        self.level_folder = level_folder
         self.themes = themes
 
 
@@ -155,12 +169,3 @@ class LevelFolder(m_handlers.JSONFileHandler, m_handlers.FolderHandler):
             audio = source.audio,
             themes = themes
         )
-
-    def to_folder(self, folder_path: str):
-        element_infos: list[tuple[LevelData, str]] = [
-            (self.level, "level"),
-            (self.metadata, "metadata"),
-            (self.audio, "audio")
-        ]
-        for element, filename in element_infos:
-            element.to_file_raw(folder_path, filename)
