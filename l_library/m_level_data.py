@@ -56,7 +56,7 @@ class Metadata(JSONData):
 
 class Audio(LevelData):
     """Represents the audio (`level.ogg`) of a level."""
-    raw_file_ext: str = ".ogg"
+    raw_file_ext: str = "ogg"
 
     def __init__(self, audio_bytes: bytes):
         self.audio_bytes = audio_bytes
@@ -140,8 +140,13 @@ class LevelFolder(m_handlers.JSONHandler):
         """Combines two level folders into one."""
         source = primary_level_folder if primary_level_folder is not None else level_folders[0]
 
+        if primary_level_folder is not None:
+            base_level = primary_level_folder.level
+        else:
+            base_level = None
+
         levels = [level_folder.level for level_folder in level_folders]
-        level = source.version.combine_levels(levels, source.level, combine_settings)
+        level = source.version.combine_levels(levels, base_level, combine_settings)
 
         return cls(
             version = source.version,

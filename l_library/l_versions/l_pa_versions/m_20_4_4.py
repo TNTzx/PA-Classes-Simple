@@ -90,7 +90,7 @@ class v20_4_4(m_versions.PAVersion):
         element_infos: list[tuple[m_level_data.LevelData, str]] = [
             (level_folder.level, "level"),
             (level_folder.metadata, "metadata"),
-            (level_folder.audio, "audio"),
+            (level_folder.audio, "level"),
         ]
         for element, filename in element_infos:
             element.to_file_raw(folder_path, filename)
