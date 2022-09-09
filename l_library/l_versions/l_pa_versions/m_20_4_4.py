@@ -32,7 +32,7 @@ class v20_4_4(m_versions.PAVersion):
 
 
     @classmethod
-    def import_level_folder(cls, level_folder: str, themes_folder: str, load_audio: bool = True) -> m_level_data.LevelFolder:
+    def import_level_folder(cls, level_folder: str, load_audio: bool = True) -> m_level_data.LevelFolder:
         def get_path_from_folder(filename: str):
             """Gets the path of the filename from the level folder."""
             return os.path.join(level_folder, filename)
@@ -73,16 +73,19 @@ class v20_4_4(m_versions.PAVersion):
                 level_version_num = "cannot detect"
             raise m_version_excs.IncompatibleVersion(level_version_num, cls.version_number)
 
-        themes = cls.get_custom_themes_from_level(level, themes_folder)
 
-
-        return m_level_data.LevelFolder(version = cls, level = level, audio = audio, metadata = metadata, themes = themes)
+        return m_level_data.LevelFolder(
+            version = cls,
+            level = level,
+            audio = audio,
+            metadata = metadata
+        )
 
 
     @classmethod
-    def get_custom_themes_from_level(cls, level: m_level_data.Level, themes_folder: str) -> list[m_level_data.Theme]:
+    def get_custom_themes_from_level(cls, level: m_level_data.Level, themes_folder_path: str) -> list[m_level_data.Theme]:
         level_theme_ids = cls.get_theme_ids_from_level(level)
-        themes = cls.get_all_themes_in_folder(themes_folder)
+        themes = cls.get_all_themes_in_folder(themes_folder_path)
 
         level_themes: list[m_level_data.Theme] = []
         level_theme_ids_buffer = copy.deepcopy(level_theme_ids)
@@ -114,8 +117,8 @@ class v20_4_4(m_versions.PAVersion):
 
 
     @classmethod
-    def get_theme_from_id(cls, themes_folder: str, theme_id: int) -> m_level_data.Theme:
-        themes = cls.get_all_themes_in_folder(themes_folder)
+    def get_theme_from_id(cls, themes_folder_path: str, theme_id: int) -> m_level_data.Theme:
+        themes = cls.get_all_themes_in_folder(themes_folder_path)
         for theme in themes:
             if int(theme.data["id"]) == theme_id:
                 return theme
@@ -124,11 +127,11 @@ class v20_4_4(m_versions.PAVersion):
 
 
     @classmethod
-    def get_all_themes_in_folder(cls, themes_folder: str) -> list[m_level_data.Theme]:
-        if not m_disk_utils.path_exists(themes_folder):
-            raise m_version_excs.FolderNotFound(themes_folder)
+    def get_all_themes_in_folder(cls, themes_folder_path: str) -> list[m_level_data.Theme]:
+        if not m_disk_utils.path_exists(themes_folder_path):
+            raise m_version_excs.FolderNotFound(themes_folder_path)
 
-        theme_paths = m_disk_utils.get_all_file_paths_in_folder(themes_folder)
+        theme_paths = m_disk_utils.get_all_file_paths_in_folder(themes_folder_path)
         theme_paths = [
             theme_path
             for theme_path in theme_paths

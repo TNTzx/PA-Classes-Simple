@@ -174,3 +174,12 @@ class LevelFolderInfo(m_handlers.JSONFileHandler, m_handlers.FolderHandler):
             level_folder = LevelFolder.from_json(json_data["level_folder"]),
             themes = [Theme.from_json(theme_json) for theme_json in json_data["themes"]]
         )
+
+
+    @classmethod
+    def from_level_folder(cls, level_folder: LevelFolder, themes_folder_path: str):
+        """Constructs from a level folder."""
+        return cls(
+            level_folder = level_folder,
+            themes = level_folder.version.get_custom_themes_from_level(level_folder.level, themes_folder_path)
+        )

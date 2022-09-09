@@ -69,15 +69,16 @@ class PAVersion(m_handlers.JSONClassHandler):
 
 
     @classmethod
-    def import_level_folder(cls, level_folder: str, themes_folder: str, load_audio: bool = True) -> m_level_data.LevelFolder:
+    def import_level_folder(cls, level_folder: str, load_audio: bool = True) -> m_level_data.LevelFolder:
         """Gets the level data from a folder."""
-    
+
     @classmethod
-    def export_level_folder(cls, level_folder)
+    def export_level_folder(cls, level_folder: m_level_data.LevelFolder, folder_path: str):
+        """Exports the level folder."""
 
 
     @classmethod
-    def get_custom_themes_from_level(cls, level: m_level_data.Level, themes_folder: str) -> list[m_level_data.Theme]:
+    def get_custom_themes_from_level(cls, level: m_level_data.Level, themes_folder_path: str) -> list[m_level_data.Theme]:
         """Gets the themes from the level to a folder."""
 
     @classmethod
@@ -85,11 +86,11 @@ class PAVersion(m_handlers.JSONClassHandler):
         """Returns all theme IDs used in all theme keyframes of the level."""
 
     @classmethod
-    def get_theme_from_id(cls, themes_folder: str, theme_id: int) -> m_level_data.Theme:
+    def get_theme_from_id(cls, themes_folder_path: str, theme_id: int) -> m_level_data.Theme:
         """Gets the theme containing the ID in the themes folder."""
 
     @classmethod
-    def get_all_themes_in_folder(cls, themes_folder: str) -> list[m_level_data.Theme]:
+    def get_all_themes_in_folder(cls, themes_folder_path: str) -> list[m_level_data.Theme]:
         """Returns all themes in a folder."""
 
 
