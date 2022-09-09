@@ -83,6 +83,18 @@ class v20_4_4(m_versions.PAVersion):
 
 
     @classmethod
+    def export_level_folder(cls, level_folder: m_level_data.LevelFolder, folder_path: str):
+        if not m_disk_utils.path_exists(folder_path):
+            raise m_version_excs.FolderNotFound(folder_path)
+
+        element_infos: list[tuple[m_level_data.LevelData, str]] = {
+            (level_folder.level, "level"),
+            (level_folder.metadata, "metadata"),
+            (level_folder.audio, "audio"),
+        }
+
+
+    @classmethod
     def get_custom_themes_from_level(cls, level: m_level_data.Level, themes_folder_path: str) -> list[m_level_data.Theme]:
         level_theme_ids = cls.get_theme_ids_from_level(level)
         themes = cls.get_all_themes_in_folder(themes_folder_path)
