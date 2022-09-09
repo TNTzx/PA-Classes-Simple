@@ -33,7 +33,7 @@ class JSONData(LevelData):
     def to_file_raw(self, folder_path: str, filename: str):
         m_disk_utils.override_file(
             folder_path,
-            self.append_file_ext(filename),
+            self.append_file_ext_raw(filename),
             str(self.data)
         )
 

@@ -74,7 +74,7 @@ class RawFileHandler(Handler):
     raw_file_ext: str
 
     @classmethod
-    def append_file_ext(cls, filename: str):
+    def append_file_ext_raw(cls, filename: str):
         """Appends the file extension to the file name."""
         return f"{filename}.{cls.raw_file_ext}"
 

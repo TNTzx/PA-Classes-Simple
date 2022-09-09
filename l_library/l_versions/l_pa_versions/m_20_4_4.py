@@ -87,11 +87,11 @@ class v20_4_4(m_versions.PAVersion):
         if not m_disk_utils.path_exists(folder_path):
             raise m_version_excs.FolderNotFound(folder_path)
 
-        element_infos: list[tuple[m_level_data.LevelData, str]] = {
+        element_infos: list[tuple[m_level_data.LevelData, str]] = [
             (level_folder.level, "level"),
             (level_folder.metadata, "metadata"),
             (level_folder.audio, "audio"),
-        }
+        ]
         for element, filename in element_infos:
             element.to_file_raw(folder_path, filename)
 
