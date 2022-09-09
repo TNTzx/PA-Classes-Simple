@@ -54,6 +54,8 @@ class Metadata(JSONData):
 
 class Audio(LevelData):
     """Represents the audio (`level.ogg`) of a level."""
+    raw_file_ext: str = ".ogg"
+
     def __init__(self, audio_bytes: bytes):
         self.audio_bytes = audio_bytes
 
