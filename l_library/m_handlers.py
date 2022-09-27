@@ -92,7 +92,7 @@ class FolderHandler(Handler):
         """Creates the folder."""
 
     @classmethod
-    def from_folder(self, folder_path: str):
+    def from_folder(cls, folder_path: str):
         """Creates this object from the folder path."""
 
 
